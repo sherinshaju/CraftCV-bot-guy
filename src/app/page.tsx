@@ -105,20 +105,24 @@ export default function LandingPage() {
 
   const faqs = [
     {
+      q: 'What is the best CV format for jobs in Dubai and the UAE?',
+      a: 'In Dubai and the UAE, recruiters and top employers rely heavily on ATS platforms (like Taleo, Workday, Bayt, and LinkedIn). The best format is a structured 1 to 2 page resume with clean section headings, quantified achievements, and standard fonts. CraftCV templates are specifically tuned to meet UAE recruiter standards.',
+    },
+    {
+      q: 'Will my resume pass Applicant Tracking Systems (ATS) in Dubai & GCC?',
+      a: 'Absolutely. CraftCV templates use standardized font families, clear semantic headers, and parseable section layouts that pass ATS screening with 100% precision.',
+    },
+    {
       q: 'Is CraftCV completely free to use?',
       a: 'Yes! You can build, customize, and export high-resolution PDF resumes with our core templates completely free.',
     },
     {
-      q: 'Will my resume pass Applicant Tracking Systems (ATS)?',
-      a: 'Absolutely. CraftCV templates use standard font families, clear text structures, and parseable section hierarchies that ATS systems read with 100% accuracy.',
-    },
-    {
-      q: 'Can I create multiple versions of my resume for different job applications?',
-      a: 'Yes! Your dashboard allows you to duplicate existing resumes, tweak details for specific job posts, and save unlimited versions.',
+      q: 'Can I create multiple versions of my CV for different Dubai job postings?',
+      a: 'Yes! Your personal dashboard allows you to duplicate existing resumes, adapt keywords for specific job applications, and save unlimited versions.',
     },
     {
       q: 'Is my data secure?',
-      a: 'Your data is encrypted and securely stored using Supabase database infrastructure. Only you have access to your personal information and resumes.',
+      a: 'Your data is encrypted and securely stored using Supabase cloud infrastructure. Only you have access to your personal information and resumes.',
     },
   ];
 
@@ -135,15 +139,15 @@ export default function LandingPage() {
             <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-amber-50 px-4 py-1.5 text-xs font-bold text-amber-800 shadow-sm">
                 <Sparkles className="h-4 w-4 text-[#febc04]" />
-                <span>Next-Gen ATS Resume Builder by Bot&amp;Guy</span>
+                <span>Dubai &amp; UAE&apos;s #1 ATS Resume Builder by Bot&amp;Guy</span>
               </div>
 
               <h1 className="text-4xl font-extrabold tracking-tight text-[#0c0c0c] sm:text-5xl lg:text-6xl leading-[1.1]">
-                Craft Job-Winning Resumes <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0c0c0c] via-slate-800 to-[#e5a803]">In Seconds</span>
+                Craft Job-Winning Resumes <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0c0c0c] via-slate-800 to-[#e5a803]">for Dubai &amp; Global Careers</span>
               </h1>
 
               <p className="max-w-2xl text-base sm:text-lg text-slate-600 font-normal leading-relaxed mx-auto lg:mx-0">
-                Create ATS-optimized, high-impact professional resumes with real-time multi-page preview, smart section ordering, and instant PDF download.
+                Create ATS-optimized, high-impact professional resumes &amp; CVs tailored for Dubai, Abu Dhabi, UAE &amp; Gulf recruiters. Real-time multi-page preview, smart section ordering, and instant PDF download.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -166,7 +170,7 @@ export default function LandingPage() {
               <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-slate-500 font-semibold">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  <span>100% Free Templates</span>
+                  <span>Dubai &amp; GCC Format Ready</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -174,7 +178,7 @@ export default function LandingPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  <span>Instant PDF Export</span>
+                  <span>Instant Vector PDF Export</span>
                 </div>
               </div>
             </div>
