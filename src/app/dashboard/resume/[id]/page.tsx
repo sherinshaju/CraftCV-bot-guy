@@ -445,7 +445,8 @@ export default function ResumeBuilder({
     | "Merriweather"
     | "Playfair Display"
     | "Open Sans"
-  >("default");
+    | "Arial"
+  >("Arial");
   const [fontSize, setFontSize] = useState(12); // in px
   const [lineSpacing, setLineSpacing] = useState(1.4); // multiplier
   const [marginSize, setMarginSize] = useState(12); // in mm
@@ -478,6 +479,7 @@ export default function ResumeBuilder({
     "full" | "text"
   >("full");
   const [showGridPattern, setShowGridPattern] = useState(false);
+  const [mobileMode, setMobileMode] = useState<"edit" | "preview">("edit");
 
   // Spacing & Skill Style
   const [sectionSpacing, setSectionSpacing] = useState(16); // in px
@@ -1356,6 +1358,21 @@ export default function ResumeBuilder({
 
     try {
       setIsExporting(true);
+      // Auto-save progress to Supabase first
+      const { error: saveErr } = await supabase
+        .from("resumes")
+        .update({
+          title: resume.title,
+          template: resume.template,
+          content: resume.content,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", resume.id);
+
+      if (saveErr) {
+        console.error("Auto-save failed before PDF download:", saveErr);
+      }
+
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       const paper = PAPER_CONFIG[paperSize] || PAPER_CONFIG.a4;
@@ -1585,6 +1602,21 @@ export default function ResumeBuilder({
 
     try {
       setIsExporting(true);
+      // Auto-save progress to Supabase first
+      const { error: saveErr } = await supabase
+        .from("resumes")
+        .update({
+          title: resume.title,
+          template: resume.template,
+          content: resume.content,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", resume.id);
+
+      if (saveErr) {
+        console.error("Auto-save failed before JPG download:", saveErr);
+      }
+
       // Wait for React to re-render without background guide lines/dots
       await new Promise((resolve) => setTimeout(resolve, 80));
 
@@ -1642,6 +1674,8 @@ export default function ResumeBuilder({
           return "'Playfair Display', serif";
         case "Open Sans":
           return "'Open Sans', sans-serif";
+        case "Arial":
+          return "Arial, Helvetica, sans-serif";
       }
     }
     switch (resume?.template) {
@@ -2414,7 +2448,7 @@ export default function ResumeBuilder({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
           {/* Autosave Status Indicator */}
           <div className="hidden md:flex items-center gap-1.5 text-neutral-400 text-[10px] font-bold mr-2 select-none">
             {saving ? (
@@ -2439,7 +2473,7 @@ export default function ResumeBuilder({
             className="flex items-center gap-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm"
           >
             <Layout className="w-4 h-4 text-[#febc04]" />
-            Change Template:{" "}
+            <span className="hidden sm:inline">Change Template:</span>{" "}
             <span className="text-neutral-900 capitalize font-extrabold">
               {currentTemplate.name}
             </span>
@@ -2604,10 +2638,38 @@ export default function ResumeBuilder({
       </div>
       */}
 
+      {/* Mobile & Tablet Mode Switcher Toggle */}
+      <div className="flex lg:hidden items-center border border-slate-200 bg-slate-100 p-1 rounded-2xl mb-2 flex-shrink-0 w-full shadow-sm">
+        <button
+          type="button"
+          onClick={() => setMobileMode("edit")}
+          className={`flex-1 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+            mobileMode === "edit"
+              ? "bg-[#0C0C0C] text-white shadow-md"
+              : "text-slate-600 hover:text-slate-800"
+          }`}
+        >
+          <Sliders className="w-3.5 h-3.5" />
+          Edit Fields
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileMode("preview")}
+          className={`flex-1 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+            mobileMode === "preview"
+              ? "bg-[#0C0C0C] text-white shadow-md"
+              : "text-slate-600 hover:text-slate-800"
+          }`}
+        >
+          <Eye className="w-3.5 h-3.5" />
+          Live Preview
+        </button>
+      </div>
+
       {/* Main Workspace */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-0 overflow-hidden">
         {/* Left Panel: Inputs Form */}
-        <div className="bg-white border border-black/5 rounded-2xl flex flex-col h-full overflow-hidden shadow-sm">
+        <div className={`bg-white border border-black/5 rounded-2xl flex flex-col h-full overflow-hidden shadow-sm ${mobileMode === "preview" ? "hidden lg:flex" : "flex"}`}>
           {/* Tabs header - DESIGN IS FIRST! */}
           <div className="flex items-center border-b border-black/5 px-2 flex-shrink-0 relative">
             <button
@@ -2627,10 +2689,8 @@ export default function ResumeBuilder({
                 { id: "design", label: "Design", icon: Sliders },
                 { id: "info", label: "Info", icon: FileText },
                 { id: "experience", label: "Experience", icon: Briefcase },
-                { id: "education", label: "Education", icon: GraduationCap },
-                { id: "projects", label: "Projects", icon: Code },
-                { id: "skills", label: "Skills", icon: Sparkles },
-                { id: "certs", label: "Certs", icon: Award },
+                { id: "education", label: "Education & Projects", icon: GraduationCap },
+                { id: "skills", label: "Skills & Certs", icon: Sparkles },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -3760,122 +3820,428 @@ export default function ResumeBuilder({
               </div>
             )}
 
-            {/* Education Tab */}
+            {/* Education & Projects Tab */}
             {activeTab === "education" && (
-              <div className="space-y-4 animate-in fade-in duration-200">
-                <div className="flex justify-between items-center border-b border-black/5 pb-2">
-                  <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-[#febc04]" />{" "}
-                    Education
-                  </h3>
-                  <button
-                    onClick={addEducation}
-                    className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
-                  >
-                    <Plus className="w-3 h-3" /> Add Degree
-                  </button>
-                </div>
+              <div className="space-y-6 animate-in fade-in duration-200 divide-y divide-black/5">
+                {/* A. Education Panel */}
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center border-b border-black/5 pb-2">
+                    <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4 text-[#febc04]" /> Education
+                    </h3>
+                    <button
+                      onClick={addEducation}
+                      className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
+                    >
+                      <Plus className="w-3 h-3" /> Add Degree
+                    </button>
+                  </div>
 
-                {resume.content.education.length === 0 ? (
-                  <p className="text-xs text-neutral-400 text-center py-6">
-                    No education items added. Click "Add Degree" above.
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    {resume.content.education.map((edu, index) => (
-                      <div
-                        key={edu.id}
-                        className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
-                      >
-                        <div className="absolute right-3 top-3 flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-all">
-                          <button
-                            onClick={() => moveEducation(index, "up")}
-                            disabled={index === 0}
-                            className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
-                          >
-                            <ArrowUp className="w-3.5 h-3.5 text-neutral-600" />
-                          </button>
-                          <button
-                            onClick={() => moveEducation(index, "down")}
-                            disabled={
-                              index === resume.content.education.length - 1
-                            }
-                            className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
-                          >
-                            <ArrowDown className="w-3.5 h-3.5 text-neutral-600" />
-                          </button>
-                          <button
-                            onClick={() => deleteEducation(index)}
-                            className="p-1 hover:bg-red-50 text-red-500 rounded ml-1"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
+                  {resume.content.education.length === 0 ? (
+                    <p className="text-xs text-neutral-400 text-center py-6">
+                      No education items added. Click "Add Degree" above.
+                    </p>
+                  ) : (
+                    <div className="space-y-4 max-h-[300px] overflow-y-auto pr-1">
+                      {resume.content.education.map((edu, index) => (
+                        <div
+                          key={edu.id}
+                          className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
+                        >
+                          <div className="absolute right-3 top-3 flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-all">
+                            <button
+                              onClick={() => moveEducation(index, "up")}
+                              disabled={index === 0}
+                              className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
+                            >
+                              <ArrowUp className="w-3.5 h-3.5 text-neutral-600" />
+                            </button>
+                            <button
+                              onClick={() => moveEducation(index, "down")}
+                              disabled={
+                                index === resume.content.education.length - 1
+                              }
+                              className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
+                            >
+                              <ArrowDown className="w-3.5 h-3.5 text-neutral-600" />
+                            </button>
+                            <button
+                              onClick={() => deleteEducation(index)}
+                              className="p-1 hover:bg-red-50 text-red-500 rounded ml-1"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
 
-                        <div className="font-bold text-xs text-neutral-400">
-                          Education #{index + 1}
-                        </div>
+                          <div className="font-bold text-xs text-neutral-400">
+                            Education #{index + 1}
+                          </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              School / University
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="IIT Bombay"
-                              value={edu.school}
-                              onChange={(e) =>
-                                updateEducation(index, "school", e.target.value)
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Degree / Specialization
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="B.Tech in Computer Science"
-                              value={edu.degree}
-                              onChange={(e) =>
-                                updateEducation(index, "degree", e.target.value)
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Location
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Mumbai, India"
-                              value={edu.location}
-                              onChange={(e) =>
-                                updateEducation(
-                                  index,
-                                  "location",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div className="space-y-1">
                               <label className="text-[10px] font-bold text-neutral-500">
-                                Graduation Year/Date
+                                School / University
                               </label>
                               <input
                                 type="text"
-                                placeholder="May 2021"
-                                value={edu.gradDate}
+                                placeholder="IIT Bombay"
+                                value={edu.school}
+                                onChange={(e) =>
+                                  updateEducation(index, "school", e.target.value)
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Degree / Specialization
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="B.Tech in Computer Science"
+                                value={edu.degree}
+                                onChange={(e) =>
+                                  updateEducation(index, "degree", e.target.value)
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Location
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="Mumbai, India"
+                                value={edu.location}
                                 onChange={(e) =>
                                   updateEducation(
                                     index,
-                                    "gradDate",
+                                    "location",
+                                    e.target.value,
+                                  )
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-neutral-500">
+                                  Graduation Year/Date
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="May 2021"
+                                  value={edu.gradDate}
+                                  onChange={(e) =>
+                                    updateEducation(
+                                      index,
+                                      "gradDate",
+                                      e.target.value,
+                                    )
+                                  }
+                                  className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-neutral-500">
+                                  GPA / Marks (Optional)
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="9.2/10"
+                                  value={edu.gpa}
+                                  onChange={(e) =>
+                                    updateEducation(index, "gpa", e.target.value)
+                                  }
+                                  className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* B. Projects Panel */}
+                <div className="space-y-4 pt-6">
+                  <div className="flex justify-between items-center border-b border-black/5 pb-2">
+                    <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
+                      <Code className="w-4 h-4 text-[#febc04]" /> Projects
+                    </h3>
+                    <button
+                      onClick={addProject}
+                      className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
+                    >
+                      <Plus className="w-3 h-3" /> Add Project
+                    </button>
+                  </div>
+
+                  {resume.content.projects.length === 0 ? (
+                    <p className="text-xs text-neutral-400 text-center py-6">
+                      No projects added. Click "Add Project" above.
+                    </p>
+                  ) : (
+                    <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+                      {resume.content.projects.map((proj, index) => (
+                        <div
+                          key={proj.id}
+                          className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
+                        >
+                          <div className="absolute right-3 top-3 flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-all">
+                            <button
+                              onClick={() => moveProject(index, "up")}
+                              disabled={index === 0}
+                              className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
+                            >
+                              <ArrowUp className="w-3.5 h-3.5 text-neutral-600" />
+                            </button>
+                            <button
+                              onClick={() => moveProject(index, "down")}
+                              disabled={
+                                index === resume.content.projects.length - 1
+                              }
+                              className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
+                            >
+                              <ArrowDown className="w-3.5 h-3.5 text-neutral-600" />
+                            </button>
+                            <button
+                              onClick={() => deleteProject(index)}
+                              className="p-1 hover:bg-red-50 text-red-500 rounded ml-1"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="font-bold text-xs text-neutral-400">
+                            Project #{index + 1}
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Project Name
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="E-Commerce API"
+                                value={proj.name}
+                                onChange={(e) =>
+                                  updateProject(index, "name", e.target.value)
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Role / Tech Stack
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="React, Node.js, Postgres"
+                                value={proj.role}
+                                onChange={(e) =>
+                                  updateProject(index, "role", e.target.value)
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="md:col-span-2 space-y-1">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Project Link (Github / Live Demo)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="github.com/username/project"
+                                value={proj.link}
+                                onChange={(e) =>
+                                  updateProject(index, "link", e.target.value)
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="md:col-span-2 space-y-1">
+                              <div className="flex justify-between items-center mb-1">
+                                <label className="text-[10px] font-bold text-neutral-500">
+                                  Description (One item per line for bullets)
+                                </label>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    enhanceWithAI({ type: "project", index })
+                                  }
+                                  disabled={enhancingField === `project-${index}`}
+                                  className="flex items-center gap-1 text-[9px] font-bold text-teal-600 hover:text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-lg disabled:opacity-50"
+                                >
+                                  {enhancingField === `project-${index}` ? (
+                                    <>
+                                      <Loader2 className="w-2.5 h-2.5 animate-spin" />{" "}
+                                      Enhancing...
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Sparkles className="w-2.5 h-2.5" /> AI
+                                      Enhance
+                                    </>
+                                  )}
+                                </button>
+                              </div>
+                              <textarea
+                                rows={4}
+                                placeholder="• Developed a real-time collaborative workspace app using WebSockets, Next.js, and PostgreSQL, decreasing message latency by 35%.&#10;• Integrated Stripe payment gateway and Auth0 authentication for secure, streamlined subscription management.&#10;• Optimized database queries and indexed keys, decreasing server response times by 30%."
+                                value={proj.description}
+                                onChange={(e) =>
+                                  updateProject(
+                                    index,
+                                    "description",
+                                    e.target.value,
+                                  )
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-2 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] resize-none transition-all"
+                              />
+                              <p className="text-[9px] text-neutral-400 font-semibold mt-0.5 leading-relaxed">
+                                Tip: Start each line with a bullet symbol '• '.
+                                Try to follow the format:{" "}
+                                <strong>
+                                  Action Verb + Task + Outcome/Technology
+                                </strong>{" "}
+                                (e.g. "Developed real-time chat app using
+                                WebSockets, reducing latency by 30%").
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Skills & Certs Tab */}
+            {activeTab === "skills" && (
+              <div className="space-y-6 animate-in fade-in duration-200 divide-y divide-black/5">
+                {/* A. Skills Panel */}
+                <div className="space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2 border-b border-black/5 pb-2">
+                    <Sparkles className="w-4 h-4 text-[#febc04]" /> Key Skills (ATS Optimized)
+                  </h3>
+
+                  <form onSubmit={addSkill} className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter a skill (e.g. React, Docker, SQL) and press enter"
+                      value={skillInput}
+                      onChange={(e) => setSkillInput(e.target.value)}
+                      className="flex-1 bg-neutral-50 border border-black/5 rounded-xl px-4 py-2 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                    />
+                    <button
+                      type="submit"
+                      className="bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all"
+                    >
+                      Add
+                    </button>
+                  </form>
+
+                  {/* Predefined Click Suggestions */}
+                  <div className="space-y-1">
+                    <div className="text-[9px] font-bold text-neutral-400">
+                      Popular Suggestions (Click to Add):
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {SUGGESTED_SKILLS.map((skill) => (
+                        <button
+                          key={skill}
+                          type="button"
+                          onClick={() => clickAddSkill(skill)}
+                          className="bg-neutral-50 hover:bg-[#febc04]/10 text-neutral-500 hover:text-neutral-900 border border-black/5 hover:border-[#febc04]/20 text-[10px] px-2.5 py-0.5 rounded-full transition-all"
+                        >
+                          + {skill}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-2">
+                    <div className="text-[10px] font-bold text-neutral-400">
+                      Added Skills
+                    </div>
+                    {resume.content.skills.length === 0 ? (
+                      <p className="text-xs text-neutral-400 py-2">
+                        No skills added yet.
+                      </p>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        {resume.content.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="bg-white border border-black/5 text-[#0C0C0C] text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1.5 group hover:border-red-200 transition-all cursor-pointer"
+                            onClick={() => deleteSkill(skill)}
+                            title="Click to remove"
+                          >
+                            {skill}
+                            <span className="text-neutral-400 group-hover:text-red-500 font-bold transition-colors">
+                              ×
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* B. Certifications Panel */}
+                <div className="space-y-4 pt-6">
+                  <div className="flex justify-between items-center border-b border-black/5 pb-2">
+                    <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
+                      <Award className="w-4 h-4 text-[#febc04]" /> Certifications &amp; Licenses
+                    </h3>
+                    <button
+                      onClick={addCertification}
+                      className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
+                    >
+                      <Plus className="w-3 h-3" /> Add Cert
+                    </button>
+                  </div>
+
+                  {resume.content.certifications.length === 0 ? (
+                    <p className="text-xs text-neutral-400 text-center py-6">
+                      No certifications added. Click "Add Cert" above.
+                    </p>
+                  ) : (
+                    <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+                      {resume.content.certifications.map((cert, index) => (
+                        <div
+                          key={cert.id}
+                          className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
+                        >
+                          <button
+                            onClick={() => deleteCertification(index)}
+                            className="absolute right-3 top-3 p-1 hover:bg-red-50 text-red-500 rounded opacity-60 group-hover:opacity-100 transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+
+                          <div className="font-bold text-xs text-neutral-400">
+                            Certification #{index + 1}
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div className="space-y-1 md:col-span-2">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Name
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="AWS Certified Solutions Architect"
+                                value={cert.name}
+                                onChange={(e) =>
+                                  updateCertification(
+                                    index,
+                                    "name",
                                     e.target.value,
                                   )
                                 }
@@ -3884,359 +4250,53 @@ export default function ResumeBuilder({
                             </div>
                             <div className="space-y-1">
                               <label className="text-[10px] font-bold text-neutral-500">
-                                GPA / Marks (Optional)
+                                Date
                               </label>
                               <input
                                 type="text"
-                                placeholder="9.2/10"
-                                value={edu.gpa}
+                                placeholder="Dec 2022"
+                                value={cert.date}
                                 onChange={(e) =>
-                                  updateEducation(index, "gpa", e.target.value)
+                                  updateCertification(
+                                    index,
+                                    "date",
+                                    e.target.value,
+                                  )
+                                }
+                                className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
+                              />
+                            </div>
+                            <div className="space-y-1 md:col-span-3">
+                              <label className="text-[10px] font-bold text-neutral-500">
+                                Issuing Organization / URL
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="Amazon Web Services (AWS)"
+                                value={cert.issuer}
+                                onChange={(e) =>
+                                  updateCertification(
+                                    index,
+                                    "issuer",
+                                    e.target.value,
+                                  )
                                 }
                                 className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
                               />
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Projects Tab */}
-            {activeTab === "projects" && (
-              <div className="space-y-4 animate-in fade-in duration-200">
-                <div className="flex justify-between items-center border-b border-black/5 pb-2">
-                  <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
-                    <Code className="w-4 h-4 text-[#febc04]" /> Projects
-                  </h3>
-                  <button
-                    onClick={addProject}
-                    className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
-                  >
-                    <Plus className="w-3 h-3" /> Add Project
-                  </button>
-                </div>
-
-                {resume.content.projects.length === 0 ? (
-                  <p className="text-xs text-neutral-400 text-center py-6">
-                    No projects added. Click "Add Project" above.
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    {resume.content.projects.map((proj, index) => (
-                      <div
-                        key={proj.id}
-                        className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
-                      >
-                        <div className="absolute right-3 top-3 flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-all">
-                          <button
-                            onClick={() => moveProject(index, "up")}
-                            disabled={index === 0}
-                            className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
-                          >
-                            <ArrowUp className="w-3.5 h-3.5 text-neutral-600" />
-                          </button>
-                          <button
-                            onClick={() => moveProject(index, "down")}
-                            disabled={
-                              index === resume.content.projects.length - 1
-                            }
-                            className="p-1 hover:bg-neutral-200 rounded disabled:opacity-30"
-                          >
-                            <ArrowDown className="w-3.5 h-3.5 text-neutral-600" />
-                          </button>
-                          <button
-                            onClick={() => deleteProject(index)}
-                            className="p-1 hover:bg-red-50 text-red-500 rounded ml-1"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                        <div className="font-bold text-xs text-neutral-400">
-                          Project #{index + 1}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Project Name
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="E-Commerce API"
-                              value={proj.name}
-                              onChange={(e) =>
-                                updateProject(index, "name", e.target.value)
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Role / Tech Stack
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="React, Node.js, Postgres"
-                              value={proj.role}
-                              onChange={(e) =>
-                                updateProject(index, "role", e.target.value)
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="md:col-span-2 space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Project Link (Github / Live Demo)
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="github.com/username/project"
-                              value={proj.link}
-                              onChange={(e) =>
-                                updateProject(index, "link", e.target.value)
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="md:col-span-2 space-y-1">
-                            <div className="flex justify-between items-center mb-1">
-                              <label className="text-[10px] font-bold text-neutral-500">
-                                Description (One item per line for bullets)
-                              </label>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  enhanceWithAI({ type: "project", index })
-                                }
-                                disabled={enhancingField === `project-${index}`}
-                                className="flex items-center gap-1 text-[9px] font-bold text-teal-600 hover:text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-lg disabled:opacity-50"
-                              >
-                                {enhancingField === `project-${index}` ? (
-                                  <>
-                                    <Loader2 className="w-2.5 h-2.5 animate-spin" />{" "}
-                                    Enhancing...
-                                  </>
-                                ) : (
-                                  <>
-                                    <Sparkles className="w-2.5 h-2.5" /> AI
-                                    Enhance
-                                  </>
-                                )}
-                              </button>
-                            </div>
-                            <textarea
-                              rows={4}
-                              placeholder="• Developed a real-time collaborative workspace app using WebSockets, Next.js, and PostgreSQL, decreasing message latency by 35%.&#10;• Integrated Stripe payment gateway and Auth0 authentication for secure, streamlined subscription management.&#10;• Optimized database queries and indexed keys, decreasing server response times by 30%."
-                              value={proj.description}
-                              onChange={(e) =>
-                                updateProject(
-                                  index,
-                                  "description",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-2 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] resize-none transition-all"
-                            />
-                            <p className="text-[9px] text-neutral-400 font-semibold mt-0.5 leading-relaxed">
-                              Tip: Start each line with a bullet symbol '• '.
-                              Try to follow the format:{" "}
-                              <strong>
-                                Action Verb + Task + Outcome/Technology
-                              </strong>{" "}
-                              (e.g. "Developed real-time chat app using
-                              WebSockets, reducing latency by 30%").
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Skills Tab */}
-            {activeTab === "skills" && (
-              <div className="space-y-4 animate-in fade-in duration-200">
-                <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2 border-b border-black/5 pb-2">
-                  <Sparkles className="w-4 h-4 text-[#febc04]" /> Key Skills
-                  (ATS Optimized)
-                </h3>
-
-                <form onSubmit={addSkill} className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Enter a skill (e.g. React, Docker, SQL) and press enter"
-                    value={skillInput}
-                    onChange={(e) => setSkillInput(e.target.value)}
-                    className="flex-1 bg-neutral-50 border border-black/5 rounded-xl px-4 py-2 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all"
-                  >
-                    Add
-                  </button>
-                </form>
-
-                {/* Predefined Click Suggestions */}
-                <div className="space-y-1">
-                  <div className="text-[9px] font-bold text-neutral-400">
-                    Popular Suggestions (Click to Add):
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {SUGGESTED_SKILLS.map((skill) => (
-                      <button
-                        key={skill}
-                        type="button"
-                        onClick={() => clickAddSkill(skill)}
-                        className="bg-neutral-50 hover:bg-[#febc04]/10 text-neutral-500 hover:text-neutral-900 border border-black/5 hover:border-[#febc04]/20 text-[10px] px-2.5 py-0.5 rounded-full transition-all"
-                      >
-                        + {skill}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-2">
-                  <div className="text-[10px] font-bold text-neutral-400">
-                    Added Skills
-                  </div>
-                  {resume.content.skills.length === 0 ? (
-                    <p className="text-xs text-neutral-400 py-2">
-                      No skills added yet.
-                    </p>
-                  ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {resume.content.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="bg-white border border-black/5 text-[#0C0C0C] text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1.5 group hover:border-red-200 transition-all cursor-pointer"
-                          onClick={() => deleteSkill(skill)}
-                          title="Click to remove"
-                        >
-                          {skill}
-                          <span className="text-neutral-400 group-hover:text-red-500 font-bold transition-colors">
-                            ×
-                          </span>
-                        </span>
                       ))}
                     </div>
                   )}
                 </div>
               </div>
             )}
-
-            {/* Certifications Tab */}
-            {activeTab === "certs" && (
-              <div className="space-y-4 animate-in fade-in duration-200">
-                <div className="flex justify-between items-center border-b border-black/5 pb-2">
-                  <h3 className="font-extrabold text-neutral-800 text-sm flex items-center gap-2">
-                    <Award className="w-4 h-4 text-[#febc04]" /> Certifications
-                  </h3>
-                  <button
-                    onClick={addCertification}
-                    className="flex items-center gap-1 text-[11px] font-bold bg-[#febc04]/15 hover:bg-[#febc04]/25 text-[#261900] px-3 py-1.5 rounded-lg border border-[#febc04]/30"
-                  >
-                    <Plus className="w-3 h-3" /> Add Cert
-                  </button>
-                </div>
-
-                {resume.content.certifications.length === 0 ? (
-                  <p className="text-xs text-neutral-400 text-center py-6">
-                    No certifications added. Click "Add Cert" above.
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    {resume.content.certifications.map((cert, index) => (
-                      <div
-                        key={cert.id}
-                        className="bg-neutral-50 border border-black/5 rounded-xl p-4 space-y-3 relative group"
-                      >
-                        <button
-                          onClick={() => deleteCertification(index)}
-                          className="absolute right-3 top-3 p-1 hover:bg-red-50 text-red-500 rounded opacity-60 group-hover:opacity-100 transition-all"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-
-                        <div className="font-bold text-xs text-neutral-400">
-                          Certification #{index + 1}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                          <div className="space-y-1 md:col-span-2">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Name
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="AWS Certified Solutions Architect"
-                              value={cert.name}
-                              onChange={(e) =>
-                                updateCertification(
-                                  index,
-                                  "name",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Date
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Dec 2022"
-                              value={cert.date}
-                              onChange={(e) =>
-                                updateCertification(
-                                  index,
-                                  "date",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1 md:col-span-3">
-                            <label className="text-[10px] font-bold text-neutral-500">
-                              Issuing Organization / URL
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Amazon Web Services (AWS)"
-                              value={cert.issuer}
-                              onChange={(e) =>
-                                updateCertification(
-                                  index,
-                                  "issuer",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full bg-white border border-black/5 rounded-lg px-3 py-1.5 text-xs text-[#0C0C0C] outline-none focus:border-[#febc04] transition-all"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
         {/* Right Panel: Live Preview */}
-        <div className="bg-white border border-black/5 rounded-2xl flex flex-col h-full overflow-hidden shadow-sm">
+        <div className={`bg-white border border-black/5 rounded-2xl flex flex-col h-full overflow-hidden shadow-sm ${mobileMode === "edit" ? "hidden lg:flex" : "flex"}`}>
           {/* Spacing & Style Adjustment Panel */}
           <div className="border-b border-black/5 px-4 py-3 bg-neutral-50 flex flex-wrap gap-4 items-center justify-between text-xs text-neutral-700 flex-shrink-0">
             {/* Accent Color Picker */}
@@ -4280,7 +4340,26 @@ export default function ResumeBuilder({
               </div>
 
               <div className="flex items-center gap-1">
-                <span className="font-semibold text-neutral-500">Font:</span>
+                <span className="font-semibold text-neutral-500 font-medium">Font Family:</span>
+                <select
+                  value={fontFamily}
+                  onChange={(e) => setFontFamily(e.target.value as any)}
+                  className="bg-white border border-neutral-300 rounded-lg px-2 py-0.5 text-[11px] font-bold text-neutral-800 outline-none cursor-pointer hover:border-[#febc04] transition-all"
+                >
+                  <option value="default">Default Theme Font</option>
+                  <option value="Arial">Arial (ATS Classic)</option>
+                  <option value="Inter">Inter (ATS Sans)</option>
+                  <option value="Open Sans">Open Sans (ATS Sans)</option>
+                  <option value="Outfit">Outfit (ATS Sans)</option>
+                  <option value="Lora">Lora (ATS Serif)</option>
+                  <option value="Merriweather">Merriweather (ATS Serif)</option>
+                  <option value="Playfair Display">Playfair Display</option>
+                  <option value="Fira Code">Fira Code (Tech/Mono)</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <span className="font-semibold text-neutral-500">Font Size:</span>
                 <input
                   type="range"
                   min={10}
@@ -4290,45 +4369,14 @@ export default function ResumeBuilder({
                   className="w-16 h-1 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-[#febc04]"
                 />
                 <span className="font-bold text-neutral-800 text-[10px]">
-                  {fontSize}px
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1">
-                <span className="font-semibold text-neutral-500">Spacing:</span>
-                <input
-                  type="range"
-                  min={1.1}
-                  max={2.0}
-                  step={0.1}
-                  value={lineSpacing}
-                  onChange={(e) => setLineSpacing(Number(e.target.value))}
-                  className="w-16 h-1 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-[#febc04]"
-                />
-                <span className="font-bold text-neutral-800 text-[10px]">
-                  {lineSpacing}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1">
-                <span className="font-semibold text-neutral-500">Margin:</span>
-                <input
-                  type="range"
-                  min={6}
-                  max={20}
-                  value={marginSize}
-                  onChange={(e) => setMarginSize(Number(e.target.value))}
-                  className="w-16 h-1 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-[#febc04]"
-                />
-                <span className="font-bold text-neutral-800 text-[10px]">
-                  {marginSize}mm
+                  {fontSize}px (Min 10px)
                 </span>
               </div>
             </div>
           </div>
 
           {/* Preview Document Canvas */}
-          <div className="flex-1 overflow-y-auto p-6 bg-neutral-100 flex justify-center">
+          <div className="flex-1 overflow-auto p-3 sm:p-6 bg-neutral-100 flex justify-start lg:justify-center">
             {/* The actual resume sheet to render/download */}
             <div
               id="resume-preview-container"
