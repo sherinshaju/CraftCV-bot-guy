@@ -2482,14 +2482,13 @@ export default function ResumeBuilder({
         </div>
       )}
 
-      {/* AI Resume Builder Panel (Premium Glassmorphism Card) */}
+      {/* AI Resume Builder Panel (Premium Glassmorphism Card) - Hidden as requested */}
+      {/*
       <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-indigo-500/20 rounded-2xl p-5 shadow-xl flex-shrink-0 relative overflow-hidden animate-in fade-in duration-300">
-        {/* Background glow effects */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
         <div className="flex flex-col md:flex-row gap-5 items-start relative z-10">
-          {/* Header & Icon */}
           <div className="flex items-start gap-3 md:w-1/3">
             <div className="p-3 bg-indigo-500/15 rounded-xl border border-indigo-400/20 text-indigo-400 shadow-inner flex-shrink-0 animate-pulse">
               <Sparkles className="w-5 h-5" />
@@ -2511,7 +2510,6 @@ export default function ResumeBuilder({
             </div>
           </div>
 
-          {/* Prompt Input & Actions */}
           <div className="flex-1 w-full space-y-3">
             <div className="relative">
               <textarea
@@ -2540,7 +2538,6 @@ export default function ResumeBuilder({
               )}
             </div>
 
-            {/* Quick Pills */}
             {!isAiGenerating && (
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="text-[10px] text-neutral-400 mr-1 font-bold">
@@ -2572,7 +2569,6 @@ export default function ResumeBuilder({
               </div>
             )}
 
-            {/* Action Buttons */}
             <div className="flex justify-between items-center pt-1">
               <span className="text-[10px] text-neutral-400 flex items-center gap-1">
                 <Info className="w-3.5 h-3.5 text-indigo-400" /> Overwrites
@@ -2606,6 +2602,7 @@ export default function ResumeBuilder({
           </div>
         </div>
       </div>
+      */}
 
       {/* Main Workspace */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-0 overflow-hidden">
