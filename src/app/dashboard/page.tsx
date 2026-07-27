@@ -119,6 +119,19 @@ export default function ResumesDashboard() {
     if (!user) return;
     setCreating(true);
     try {
+      const { count, error: countErr } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      if (countErr) throw countErr;
+
+      if (count !== null && count >= 2) {
+        alert("Maximum limit of 2 resumes reached. Please delete an existing resume to create a new one.");
+        setCreating(false);
+        return;
+      }
+
       const targetTemplate = selectedTemplate || 'minimal';
       const defaultContent = {
         personalInfo: {
@@ -181,6 +194,18 @@ export default function ResumesDashboard() {
   const duplicateResume = async (resume: Resume) => {
     if (!user) return;
     try {
+      const { count, error: countErr } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      if (countErr) throw countErr;
+
+      if (count !== null && count >= 2) {
+        alert("Maximum limit of 2 resumes reached. Please delete an existing resume to duplicate this one.");
+        return;
+      }
+
       const { data: fullResume, error: fetchErr } = await supabase
         .from('resumes')
         .select('content')
@@ -237,6 +262,19 @@ export default function ResumesDashboard() {
     }
     try {
       setOptLoading(true);
+      const { count, error: countErr } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id);
+
+      if (countErr) throw countErr;
+
+      if (count !== null && count >= 2) {
+        alert("Maximum limit of 2 resumes reached. Please delete an existing resume to optimize a new one.");
+        setOptLoading(false);
+        return;
+      }
+
       const res = await fetch('/api/optimize-resume', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -286,6 +324,18 @@ export default function ResumesDashboard() {
     }
     try {
       setScratchLoading(true);
+      const { count, error: countErr } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id);
+
+      if (countErr) throw countErr;
+
+      if (count !== null && count >= 2) {
+        alert("Maximum limit of 2 resumes reached. Please delete an existing resume to build a new one.");
+        setScratchLoading(false);
+        return;
+      }
       
       const payload = {
         fullName: scratchName,
@@ -439,8 +489,15 @@ export default function ResumesDashboard() {
       </div>
 
       {/* Saved Resumes Header */}
-      <div className="border-t border-slate-200 pt-8 mb-6">
+      <div className="border-t border-slate-200 pt-8 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
         <h2 className="text-xl font-extrabold text-[#0c0c0c] tracking-tight">My Saved Resumes</h2>
+        <span className={`text-xs font-bold px-3 py-1.5 rounded-full border ${
+          resumes.length >= 2 
+            ? 'text-rose-600 bg-rose-50 border-rose-200/50' 
+            : 'text-slate-500 bg-slate-100 border-slate-200/50'
+        }`}>
+          Resumes: {resumes.length}/2 (Free Limit)
+        </span>
       </div>
 
       {/* Search Bar */}
@@ -675,6 +732,20 @@ export default function ResumesDashboard() {
                       <option value="creative">Creative Teal</option>
                       <option value="academic">Academic Serif</option>
                       <option value="tech">Developer Tech</option>
+                      <option value="elegant">Elegant Navy</option>
+                      <option value="simple">Simple Emerald</option>
+                      <option value="metro">Metro Boxed</option>
+                      <option value="warm">Warm Ochre</option>
+                      <option value="marketing">Marketing Bold</option>
+                      <option value="corporate">Corporate Slate Blue</option>
+                      <option value="chicago">Chicago Editorial</option>
+                      <option value="berkeley">Berkeley Academic Navy</option>
+                      <option value="geneva">Geneva Modernist</option>
+                      <option value="tokyo">Tokyo Minimalist Boxed</option>
+                      <option value="sydney">Sydney Creative Bold</option>
+                      <option value="classic_pro">Classic Professional</option>
+                      <option value="retail">Retail & Service Hub</option>
+                      <option value="startup">Startup Executive</option>
                     </select>
                   </div>
 
@@ -835,6 +906,20 @@ export default function ResumesDashboard() {
                       <option value="creative">Creative Teal</option>
                       <option value="academic">Academic Serif</option>
                       <option value="tech">Developer Tech</option>
+                      <option value="elegant">Elegant Navy</option>
+                      <option value="simple">Simple Emerald</option>
+                      <option value="metro">Metro Boxed</option>
+                      <option value="warm">Warm Ochre</option>
+                      <option value="marketing">Marketing Bold</option>
+                      <option value="corporate">Corporate Slate Blue</option>
+                      <option value="chicago">Chicago Editorial</option>
+                      <option value="berkeley">Berkeley Academic Navy</option>
+                      <option value="geneva">Geneva Modernist</option>
+                      <option value="tokyo">Tokyo Minimalist Boxed</option>
+                      <option value="sydney">Sydney Creative Bold</option>
+                      <option value="classic_pro">Classic Professional</option>
+                      <option value="retail">Retail & Service Hub</option>
+                      <option value="startup">Startup Executive</option>
                     </select>
                   </div>
 

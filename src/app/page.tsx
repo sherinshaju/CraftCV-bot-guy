@@ -605,7 +605,7 @@ export default function LandingPage() {
               Complete Resume Pass
             </h3>
             <p className="text-xs text-slate-500 mb-6">
-              Unlimited access to all resume builder features and exports.
+              Create and export up to 2 high-quality professional resumes.
             </p>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="text-4xl font-extrabold text-[#0c0c0c]">$0</span>
@@ -615,7 +615,7 @@ export default function LandingPage() {
             <ul className="space-y-3 text-xs font-medium text-slate-700 mb-8">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>Unlimited Resumes &amp; Storage</span>
+                <span>Up to 2 Resumes &amp; Storage</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />

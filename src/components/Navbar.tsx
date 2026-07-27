@@ -73,13 +73,13 @@ export function Navbar() {
             <>
               <Link href="/auth/login">
                 <Button variant="ghost" className="text-slate-700 font-semibold">
-                  Sign In
+                  Login
                 </Button>
               </Link>
               <Link href="/auth/register">
                 <Button variant="accent" className="gap-2">
                   <Sparkles className="h-4 w-4" />
-                  Build Resume
+                  Sign Up
                 </Button>
               </Link>
             </>

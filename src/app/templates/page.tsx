@@ -123,6 +123,87 @@ const TEMPLATE_DEFS = [
     type: 'Two-Column',
     tag: 'Highly Dynamic',
   },
+  {
+    id: 'corporate',
+    name: 'Corporate Slate Blue',
+    desc: 'Professional slate blue accents, clean underlines, modern sans-serif layout. Outstanding for corporate roles.',
+    color: '#2B6CB0',
+    font: 'Inter',
+    type: 'Single-Column',
+    tag: 'Corporate Spec',
+  },
+  {
+    id: 'chicago',
+    name: 'Chicago Editorial',
+    desc: 'Traditional serif styling, centered header blocks, elegant margin spaces. Perfect for writers and researchers.',
+    color: '#2D3748',
+    font: 'Merriweather',
+    type: 'Single-Column',
+    tag: 'Editorial Classic',
+  },
+  {
+    id: 'berkeley',
+    name: 'Berkeley Academic Navy',
+    desc: 'Deep navy color accents, structured traditional layout, Lora serif typography. Tailored for academic CVs.',
+    color: '#1A365D',
+    font: 'Lora',
+    type: 'Single-Column',
+    tag: 'Academic Gold',
+  },
+  {
+    id: 'geneva',
+    name: 'Geneva Modernist',
+    desc: 'Minimalist header with fresh light blue accent lines, highly parseable and extremely clean.',
+    color: '#3182CE',
+    font: 'Open Sans',
+    type: 'Single-Column',
+    tag: 'Modernist Line',
+  },
+  {
+    id: 'tokyo',
+    name: 'Tokyo Minimalist Boxed',
+    desc: 'Neat boxed categories, dense grid structure, premium Outfit typography. Excellent for compact profiles.',
+    color: '#4A5568',
+    font: 'Outfit',
+    type: 'Single-Column',
+    tag: 'Compact Box',
+  },
+  {
+    id: 'sydney',
+    name: 'Sydney Creative Bold',
+    desc: 'Thick purple sidebar accents, clean left-aligned typography. Designed to grab recruiters\' attention.',
+    color: '#805AD5',
+    font: 'Inter',
+    type: 'Single-Column',
+    tag: 'Bold & Creative',
+  },
+  {
+    id: 'classic_pro',
+    name: 'Classic Professional',
+    desc: 'Clean dark grey accents, traditional spacing, highly readable Inter typography. The ultimate ATS-safe layout.',
+    color: '#2C3E50',
+    font: 'Inter',
+    type: 'Single-Column',
+    tag: 'Standard Core',
+  },
+  {
+    id: 'retail',
+    name: 'Retail & Service Hub',
+    desc: 'Amber highlighted tabs, friendly sans-serif body, left-aligned photo grid. Suited for customer success roles.',
+    color: '#D69E2E',
+    font: 'Open Sans',
+    type: 'Single-Column',
+    tag: 'Operations Spec',
+  },
+  {
+    id: 'startup',
+    name: 'Startup Executive',
+    desc: 'Bold red accent borders, neat side-by-side header boxes, Outfit font. Modern, fast-paced and striking.',
+    color: '#E53E3E',
+    font: 'Outfit',
+    type: 'Single-Column',
+    tag: 'Fast Pace Spec',
+  },
 ];
 
 export default function TemplatesPage() {
@@ -137,6 +218,8 @@ export default function TemplatesPage() {
   const renderMiniMockup = (templateId: string) => {
     switch (templateId) {
       case 'minimal':
+      case 'chicago':
+      case 'classic_pro':
         return (
           <div className="w-full h-full bg-white p-3 flex flex-col justify-between border border-slate-100 rounded-lg shadow-inner">
             <div className="flex flex-col items-center space-y-1 mb-2">
@@ -205,6 +288,8 @@ export default function TemplatesPage() {
           </div>
         );
       case 'executive':
+      case 'corporate':
+      case 'startup':
         return (
           <div className="w-full h-full bg-white p-3 flex flex-col border border-slate-100 rounded-lg shadow-inner">
             <div className="flex justify-between items-center border-b border-slate-200 pb-2 mb-2">
@@ -228,6 +313,7 @@ export default function TemplatesPage() {
           </div>
         );
       case 'creative':
+      case 'sydney':
         return (
           <div className="w-full h-full bg-white flex border border-slate-100 rounded-lg shadow-inner overflow-hidden">
             <div className="w-1/3 bg-teal-800 p-2 flex flex-col gap-2">
@@ -253,6 +339,7 @@ export default function TemplatesPage() {
           </div>
         );
       case 'academic':
+      case 'berkeley':
         return (
           <div className="w-full h-full bg-white p-3 flex flex-col border border-slate-100 rounded-lg shadow-inner">
             <div className="flex flex-col items-center space-y-1 mb-2 border-b border-slate-200 pb-1.5">
@@ -323,6 +410,8 @@ export default function TemplatesPage() {
           </div>
         );
       case 'simple':
+      case 'geneva':
+      case 'retail':
         return (
           <div className="w-full h-full bg-white p-3 flex flex-col border border-slate-100 rounded-lg shadow-inner">
             <div className="flex gap-2 items-center border-b border-emerald-500/20 pb-2 mb-2">
@@ -341,6 +430,7 @@ export default function TemplatesPage() {
           </div>
         );
       case 'metro':
+      case 'tokyo':
         return (
           <div className="w-full h-full bg-white p-3 flex flex-col border border-slate-100 rounded-lg shadow-inner">
             <div className="border border-slate-200 p-1.5 rounded mb-2">

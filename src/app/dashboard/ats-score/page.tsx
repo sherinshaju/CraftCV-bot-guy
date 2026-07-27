@@ -49,6 +49,20 @@ const TEMPLATES = [
   { id: 'creative', name: 'Creative Teal', type: 'Two-Column' },
   { id: 'academic', name: 'Academic Serif', type: 'Single-Column' },
   { id: 'tech', name: 'Developer Tech', type: 'Two-Column' },
+  { id: 'elegant', name: 'Elegant Navy', type: 'Single-Column' },
+  { id: 'simple', name: 'Simple Emerald', type: 'Single-Column' },
+  { id: 'metro', name: 'Metro Boxed', type: 'Single-Column' },
+  { id: 'warm', name: 'Warm Ochre', type: 'Two-Column' },
+  { id: 'marketing', name: 'Marketing Bold', type: 'Two-Column' },
+  { id: 'corporate', name: 'Corporate Slate Blue', type: 'Single-Column' },
+  { id: 'chicago', name: 'Chicago Editorial', type: 'Single-Column' },
+  { id: 'berkeley', name: 'Berkeley Academic Navy', type: 'Single-Column' },
+  { id: 'geneva', name: 'Geneva Modernist', type: 'Single-Column' },
+  { id: 'tokyo', name: 'Tokyo Minimalist Boxed', type: 'Single-Column' },
+  { id: 'sydney', name: 'Sydney Creative Bold', type: 'Single-Column' },
+  { id: 'classic_pro', name: 'Classic Professional', type: 'Single-Column' },
+  { id: 'retail', name: 'Retail & Service Hub', type: 'Single-Column' },
+  { id: 'startup', name: 'Startup Executive', type: 'Single-Column' },
 ];
 
 export default function AtsScorePage() {
@@ -167,6 +181,18 @@ export default function AtsScorePage() {
 
     try {
       setOptimizing(true);
+      const { count, error: countErr } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id);
+
+      if (countErr) throw countErr;
+
+      if (count !== null && count >= 2) {
+        setErrorMsg("Maximum limit of 2 resumes reached. Please delete an existing resume to build an optimized one.");
+        setOptimizing(false);
+        return;
+      }
       
       // Call optimize API to rewrite content to ATS-friendly metrics
       const optimizeRes = await fetch('/api/optimize-resume', {

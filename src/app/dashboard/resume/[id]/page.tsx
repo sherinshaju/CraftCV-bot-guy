@@ -157,7 +157,16 @@ type TemplateType =
   | "simple"
   | "metro"
   | "warm"
-  | "marketing";
+  | "marketing"
+  | "corporate"
+  | "chicago"
+  | "berkeley"
+  | "geneva"
+  | "tokyo"
+  | "sydney"
+  | "classic_pro"
+  | "retail"
+  | "startup";
 
 interface Resume {
   id: string;
@@ -253,6 +262,78 @@ const TEMPLATE_DEFS = [
     desc: "Vibrant Growth Indigo template. Features left/right balanced header, clean outlines, and highlighted conversion metrics.",
     color: "#6366F1",
     font: "Inter",
+    type: "Single-Column",
+  },
+  {
+    id: "corporate",
+    name: "Corporate Slate Blue",
+    desc: "Professional slate blue accents, clean underlines, modern sans-serif layout. Outstanding for corporate roles.",
+    color: "#2B6CB0",
+    font: "Inter",
+    type: "Single-Column",
+  },
+  {
+    id: "chicago",
+    name: "Chicago Editorial",
+    desc: "Traditional serif styling, centered header blocks, elegant margin spaces. Perfect for writers and researchers.",
+    color: "#2D3748",
+    font: "Merriweather",
+    type: "Single-Column",
+  },
+  {
+    id: "berkeley",
+    name: "Berkeley Academic Navy",
+    desc: "Deep navy color accents, structured traditional layout, Lora serif typography. Tailored for academic CVs.",
+    color: "#1A365D",
+    font: "Lora",
+    type: "Single-Column",
+  },
+  {
+    id: "geneva",
+    name: "Geneva Modernist",
+    desc: "Minimalist header with fresh light blue accent lines, highly parseable and extremely clean.",
+    color: "#3182CE",
+    font: "Open Sans",
+    type: "Single-Column",
+  },
+  {
+    id: "tokyo",
+    name: "Tokyo Minimalist Boxed",
+    desc: "Neat boxed categories, dense grid structure, premium Outfit typography. Excellent for compact profiles.",
+    color: "#4A5568",
+    font: "Outfit",
+    type: "Single-Column",
+  },
+  {
+    id: "sydney",
+    name: "Sydney Creative Bold",
+    desc: "Thick purple sidebar accents, clean left-aligned typography. Designed to grab recruiters' attention.",
+    color: "#805AD5",
+    font: "Inter",
+    type: "Single-Column",
+  },
+  {
+    id: "classic_pro",
+    name: "Classic Professional",
+    desc: "Clean dark grey accents, traditional spacing, highly readable Inter typography. The ultimate ATS-safe layout.",
+    color: "#2C3E50",
+    font: "Inter",
+    type: "Single-Column",
+  },
+  {
+    id: "retail",
+    name: "Retail & Service Hub",
+    desc: "Amber highlighted tabs, friendly sans-serif body, left-aligned photo grid. Suited for customer success roles.",
+    color: "#D69E2E",
+    font: "Open Sans",
+    type: "Single-Column",
+  },
+  {
+    id: "startup",
+    name: "Startup Executive",
+    desc: "Bold red accent borders, neat side-by-side header boxes, Outfit font. Modern, fast-paced and striking.",
+    color: "#E53E3E",
+    font: "Outfit",
     type: "Single-Column",
   },
 ] as const;
@@ -587,7 +668,7 @@ export default function ResumeBuilder({
         }
       } catch (err) {
         console.error("Error fetching resume:", err);
-        router.push("/dashboard/resume");
+        router.push("/dashboard");
       } finally {
         setLoading(false);
       }
@@ -1716,6 +1797,8 @@ export default function ResumeBuilder({
 
     switch (templateId) {
       case "minimal":
+      case "chicago":
+      case "classic_pro":
         return {
           className:
             "text-[11px] font-black uppercase tracking-wider pb-0.5 mt-5",
@@ -1730,6 +1813,8 @@ export default function ResumeBuilder({
           textStyle: {},
         };
       case "executive":
+      case "corporate":
+      case "startup":
         return {
           className:
             "text-[11px] font-black uppercase tracking-wider pb-1 mt-5",
@@ -1737,6 +1822,7 @@ export default function ResumeBuilder({
           textStyle: { borderBottom: textBorderCss },
         };
       case "creative":
+      case "sydney":
         return {
           className:
             "text-[10px] font-bold uppercase tracking-widest pb-1 mt-4",
@@ -1744,6 +1830,7 @@ export default function ResumeBuilder({
           textStyle: { borderBottom: textBorderCss },
         };
       case "academic":
+      case "berkeley":
         return {
           className: "text-[11px] font-bold uppercase tracking-wider pb-1 mt-5",
           style: { color: accentColor, borderBottom: borderCss },
@@ -1763,12 +1850,15 @@ export default function ResumeBuilder({
           textStyle: { borderBottom: textBorderCss },
         };
       case "simple":
+      case "geneva":
+      case "retail":
         return {
           className: "text-xs font-black uppercase tracking-wider pb-0.5 mt-5",
           style: { color: accentColor, borderBottom: borderCss },
           textStyle: { borderBottom: textBorderCss },
         };
       case "metro":
+      case "tokyo":
         return {
           className:
             "text-[10px] font-black uppercase tracking-wider mt-4 border-b pb-0.5",
@@ -2434,7 +2524,7 @@ export default function ResumeBuilder({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-black/5 p-4 rounded-xl shadow-sm flex-shrink-0">
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
-            onClick={() => router.push("/dashboard/resume")}
+            onClick={() => router.push("/dashboard")}
             className="p-2 hover:bg-neutral-100 rounded-lg text-neutral-500 transition-all"
             title="Go Back"
           >
@@ -4408,7 +4498,7 @@ export default function ResumeBuilder({
                 <div className="space-y-5 text-neutral-800 text-inherit">
                   {/* Headers */}
                   {/* minimal */}
-                  {resume.template === "minimal" && (
+                  {(resume.template === "minimal" || resume.template === "chicago" || resume.template === "classic_pro") && (
                     <div className="text-center space-y-1.5 border-b border-black/10 pb-4 text-inherit">
                       <h1 className="text-3xl font-extrabold tracking-tight text-black">
                         {resume.content.personalInfo.fullName || "Your Name"}
@@ -4440,7 +4530,7 @@ export default function ResumeBuilder({
                   )}
 
                   {/* academic */}
-                  {resume.template === "academic" && (
+                  {(resume.template === "academic" || resume.template === "berkeley") && (
                     <div className="text-center space-y-2 border-b border-neutral-300 pb-4 text-inherit">
                       <h1 className="text-3xl font-extrabold text-neutral-900">
                         {resume.content.personalInfo.fullName || "Your Name"}
@@ -4472,7 +4562,7 @@ export default function ResumeBuilder({
                   )}
 
                   {/* executive */}
-                  {resume.template === "executive" && (
+                  {(resume.template === "executive" || resume.template === "corporate" || resume.template === "startup") && (
                     <div
                       className="flex justify-between items-center border-b-2 pb-4 gap-4 text-inherit"
                       style={{ borderColor: accentColor }}
@@ -4586,7 +4676,7 @@ export default function ResumeBuilder({
                   )}
 
                   {/* simple */}
-                  {resume.template === "simple" && (
+                  {(resume.template === "simple" || resume.template === "geneva" || resume.template === "retail") && (
                     <div
                       className="flex items-center gap-5 border-b pb-4 text-inherit"
                       style={{ borderColor: `${accentColor}1D` }}
@@ -4644,7 +4734,7 @@ export default function ResumeBuilder({
                   )}
 
                   {/* metro */}
-                  {resume.template === "metro" && (
+                  {(resume.template === "metro" || resume.template === "tokyo") && (
                     <div
                       className="border p-4 rounded-xl flex justify-between items-center bg-neutral-50/50 flex-shrink-0 text-inherit"
                       style={{ borderColor: `${accentColor}33` }}
@@ -4681,7 +4771,7 @@ export default function ResumeBuilder({
                   )}
 
                   {/* marketing */}
-                  {resume.template === "marketing" && (
+                  {(resume.template === "marketing" || resume.template === "sydney") && (
                     <div
                       className="flex flex-col sm:flex-row items-center sm:items-start justify-between border-b pb-4 gap-4 text-inherit"
                       style={{ borderColor: `${accentColor}33` }}
