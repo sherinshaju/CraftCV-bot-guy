@@ -38,7 +38,7 @@ export function Navbar() {
           <Link href="/#features" className="hover:text-[#0c0c0c] transition-colors">
             Features
           </Link>
-          <Link href="/#templates" className="hover:text-[#0c0c0c] transition-colors">
+          <Link href="/templates" className="hover:text-[#0c0c0c] transition-colors">
             Templates
           </Link>
           <Link href="/#pricing" className="hover:text-[#0c0c0c] transition-colors">

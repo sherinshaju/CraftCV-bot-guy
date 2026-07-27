@@ -1,21 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Loader2, ArrowRight, Lock, Mail, User, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { user, initialized, loading: authLoading } = useAuthStore();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialized && !authLoading && user) {
+      const params = new URLSearchParams(window.location.search);
+      const redirectPath = params.get('redirect') || '/dashboard';
+      router.push(redirectPath);
+    }
+  }, [user, initialized, authLoading, router]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +46,9 @@ export default function RegisterPage() {
       if (error) throw error;
 
       if (data.session) {
-        router.push('/dashboard');
+        const params = new URLSearchParams(window.location.search);
+        const redirectPath = params.get('redirect') || '/dashboard';
+        router.push(redirectPath);
       } else {
         setSuccessMsg('Account created successfully! Please check your email to verify your account or log in.');
       }

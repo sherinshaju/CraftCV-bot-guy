@@ -6,44 +6,47 @@ export function StructuredData() {
   const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    'name': 'CraftCV Dubai - #1 ATS Resume Builder & CV Maker',
-    'alternateName': ['CraftCV UAE', 'CraftCV Bot&Guy', 'Dubai ATS Resume Generator'],
+    'name': 'CraftCV - Free ATS Resume Builder, CV Maker & Resume Creator',
+    'alternateName': [
+      'CraftCV',
+      'Free Resume Builder',
+      'CV Builder',
+      'Resume Maker',
+      'Free CV Creator',
+      'CraftCV Bot&Guy',
+      'ATS Resume Generator',
+    ],
     'url': websiteUrl,
-    'description': 'Build professional, ATS-friendly resumes & CVs tailored for Dubai, Abu Dhabi, UAE & Gulf job markets with real-time multi-page previews and instant PDF exports.',
+    'description':
+      '100% Free ATS Resume Builder, Online CV Maker & Resume Creator. Build job-winning, professional ATS-friendly resumes for global and regional careers with live preview and instant vector PDF export by Bot&Guy.',
     'applicationCategory': 'BusinessApplication',
     'operatingSystem': 'All',
     'browserRequirements': 'Requires HTML5 support',
-    'offers': {
-      '@type': 'Offer',
-      'price': '0',
-      'priceCurrency': 'AED',
-    },
+    'offers': [
+      {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD',
+      },
+      {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'AED',
+      },
+    ],
     'author': {
       '@type': 'Organization',
       'name': 'Bot&Guy',
       'url': 'https://botandguy.com',
-      'areaServed': [
-        {
-          '@type': 'Country',
-          'name': 'United Arab Emirates',
-        },
-        {
-          '@type': 'City',
-          'name': 'Dubai',
-        },
-        {
-          '@type': 'City',
-          'name': 'Abu Dhabi',
-        },
-      ],
+      'areaServed': 'Global',
     },
     'featureList': [
-      'Dubai & UAE ATS-Compliant Resume Parsing',
+      '100% Free ATS-Compliant Resume Parsing & Structuring',
       'Real-Time Multi-Page Visual Preview',
-      'Custom Margin & Paper Size Controls (A4, Letter)',
-      'Pixel-Perfect PDF Download',
+      'Custom Margin & Paper Size Controls (A4, Letter, Legal)',
+      'Pixel-Perfect High-Res PDF Download',
       'Drag & Drop Section Reordering',
-      'Multi-Language & GCC Career Template Styles',
+      'Curated Professional Resume Templates',
     ],
   };
 
@@ -53,14 +56,7 @@ export function StructuredData() {
     'name': 'CraftCV by Bot&Guy',
     'url': websiteUrl,
     'logo': `${websiteUrl}/logo.png`,
-    'sameAs': [
-      'https://botandguy.com',
-    ],
-    'address': {
-      '@type': 'PostalAddress',
-      'addressLocality': 'Dubai',
-      'addressCountry': 'AE',
-    },
+    'sameAs': ['https://botandguy.com'],
   };
 
   const faqSchema = {
@@ -69,26 +65,26 @@ export function StructuredData() {
     'mainEntity': [
       {
         '@type': 'Question',
-        'name': 'What is the best CV format for jobs in Dubai and the UAE?',
+        'name': 'What is the best resume format to land interviews globally?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'The ideal Dubai CV format is an ATS-friendly, clean structured layout with clear section headers, highlighted professional accomplishments, contact information, and relevant skills. CraftCV provides pre-built templates specifically tuned to pass ATS filters used by top UAE recruiters, government entities, and MNCs.',
+          'text': 'Top employers and recruiters globally rely on Applicant Tracking Systems (like Workday, Taleo, Greenhouse, Lever, and LinkedIn). The best format is a clean, structured 1 to 2 page resume with standard font hierarchies, quantified achievements, and clear section headings. CraftCV templates are pre-built to pass all major ATS filters seamlessly.',
         },
       },
       {
         '@type': 'Question',
-        'name': 'Is CraftCV ATS-friendly for Dubai applicant tracking systems?',
+        'name': 'Will my resume pass Applicant Tracking Systems (ATS) worldwide?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Yes! CraftCV uses clean semantic markup and standardized layouts verified against popular ATS software used across the UAE and GCC, including Taleo, Workday, SuccessFactors, Bayt, and LinkedIn recruiter portals.',
+          'text': 'Yes! CraftCV uses clean semantic markup and standardized layouts verified against popular ATS software used globally, including Workday, Taleo, SuccessFactors, Greenhouse, Lever, and LinkedIn recruiter portals.',
         },
       },
       {
         '@type': 'Question',
-        'name': 'Can I export high-quality PDF resumes for free in Dubai?',
+        'name': 'Can I export high-quality PDF resumes for free?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Absolutely. CraftCV allows job seekers in Dubai and worldwide to design, preview, and download vector-based pixel-perfect PDFs ready for direct online submission or email applications.',
+          'text': 'Absolutely. CraftCV allows job seekers worldwide to design, preview, and download vector-based pixel-perfect PDFs ready for direct online submission or email applications.',
         },
       },
     ],

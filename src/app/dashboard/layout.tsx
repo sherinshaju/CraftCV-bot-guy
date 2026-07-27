@@ -16,7 +16,11 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (initialized && !loading && !user) {
-      router.push('/auth/login');
+      const currentUrl = window.location.pathname + window.location.search;
+      const redirectUrl = currentUrl !== '/dashboard' 
+        ? `/auth/login?redirect=${encodeURIComponent(currentUrl)}`
+        : '/auth/login';
+      router.push(redirectUrl);
     }
   }, [user, loading, initialized, router]);
 

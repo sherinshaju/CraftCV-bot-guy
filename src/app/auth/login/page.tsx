@@ -1,19 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Loader2, ArrowRight, Lock, Mail, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { user, initialized, loading: authLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialized && !authLoading && user) {
+      const params = new URLSearchParams(window.location.search);
+      const redirectPath = params.get('redirect') || '/dashboard';
+      router.push(redirectPath);
+    }
+  }, [user, initialized, authLoading, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +37,10 @@ export default function LoginPage() {
       });
 
       if (error) throw error;
-      router.push('/dashboard');
+      
+      const params = new URLSearchParams(window.location.search);
+      const redirectPath = params.get('redirect') || '/dashboard';
+      router.push(redirectPath);
     } catch (err: any) {
       console.error('Login error:', err);
       setErrorMsg(err.message || 'Invalid email or password. Please try again.');

@@ -44,6 +44,19 @@ export default function ResumesDashboard() {
     fetchResumes();
   }, [user]);
 
+  // Handle template query parameter when navigating from Landing page
+  useEffect(() => {
+    if (!user || loading) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const templateParam = params.get('template');
+    if (templateParam) {
+      // Clear search param from URL so refresh doesn't duplicate creation
+      window.history.replaceState({}, '', '/dashboard');
+      createResume(templateParam);
+    }
+  }, [user, loading]);
+
   const fetchResumes = async () => {
     try {
       setLoading(true);
@@ -62,10 +75,11 @@ export default function ResumesDashboard() {
     }
   };
 
-  const createResume = async () => {
+  const createResume = async (selectedTemplate?: string) => {
     if (!user) return;
     setCreating(true);
     try {
+      const targetTemplate = selectedTemplate || 'minimal';
       const defaultContent = {
         personalInfo: {
           fullName: user.user_metadata?.full_name || '',
@@ -92,7 +106,7 @@ export default function ResumesDashboard() {
           user_id: user.id,
           title: `Resume ${resumes.length + 1}`,
           content: defaultContent,
-          template: 'minimal',
+          template: targetTemplate,
           is_paid: true,
         })
         .select()
@@ -173,7 +187,7 @@ export default function ResumesDashboard() {
         <Button
           variant="accent"
           size="lg"
-          onClick={createResume}
+          onClick={() => createResume()}
           disabled={creating}
           className="gap-2 shadow-md py-6 text-sm font-bold"
         >
@@ -206,7 +220,7 @@ export default function ResumesDashboard() {
           <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
         </div>
       ) : filteredResumes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 px-4 rounded-3xl border-2 border-dashed border-slate-200 bg-white text-center">
+        <div className="flex flex-col items-center justify-center py-16 px-4 rounded-3xl border-2 border-dashed border-slate-200 bg-[#ffffff] text-center">
           <div className="h-16 w-16 rounded-2xl bg-amber-50 text-[#febc04] flex items-center justify-center mb-4">
             <FileText className="h-8 w-8" />
           </div>
@@ -214,7 +228,7 @@ export default function ResumesDashboard() {
           <p className="text-xs text-slate-500 max-w-sm mt-1 mb-6">
             {searchQuery ? 'No resumes match your search query.' : "You haven't created any resumes yet. Click below to start crafting your first resume!"}
           </p>
-          <Button variant="accent" onClick={createResume} disabled={creating} className="gap-2">
+          <Button variant="accent" onClick={() => createResume()} disabled={creating} className="gap-2">
             <Sparkles className="h-4 w-4" />
             Build Resume Now
           </Button>
