@@ -3,7 +3,7 @@ import './globals.css';
 import { AuthInitializer } from '@/components/AuthInitializer';
 import { StructuredData } from '@/components/StructuredData';
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://craftcv.botandguy.com';
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy.com';
 
 export const viewport: Viewport = {
   themeColor: '#0C0C0C',
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
     default: 'CraftCV | Free ATS Resume Builder, Online CV Maker & Resume Creator',
-    template: '%s | CraftCV - Free ATS Resume Builder & CV Maker',
+    template: '%s | CraftCV',
   },
   description:
-    '100% Free ATS Resume Builder, Online CV Maker & Resume Creator. Create job-winning, professional ATS-friendly resumes for global & regional careers with real-time multi-page preview and instant pixel-perfect PDF export by Bot&Guy.',
+    '100% Free ATS Resume Builder & Online CV Maker by Bot&Guy. Create job-winning, professional ATS-friendly resumes with 20+ templates, real-time multi-page preview, and instant pixel-perfect PDF export.',
   keywords: [
     'Free Resume Builder',
     'CV Builder',
@@ -34,7 +34,8 @@ export const metadata: Metadata = {
     'PDF Resume Maker',
     'Dubai Resume Builder',
     'UAE CV Format',
-    'CraftCV Bot&Guy',
+    'CraftCV',
+    'Bot&Guy',
   ],
   authors: [{ name: 'Bot&Guy', url: 'https://botandguy.com' }],
   creator: 'Bot&Guy',
@@ -70,13 +71,15 @@ export const metadata: Metadata = {
     siteName: 'CraftCV by Bot&Guy',
     title: 'CraftCV | Free ATS Resume Builder, CV Maker & Resume Creator',
     description:
-      '100% Free ATS Resume Builder & Online CV Creator. Build job-winning, recruiter-approved resumes with live preview & vector PDF export.',
+      '100% Free ATS Resume Builder & Online CV Creator. Build job-winning, recruiter-approved resumes with 20+ templates, live preview & instant vector PDF export.',
     images: [
       {
-        url: '/og-image.png',
+        url: `${appUrl}/og-image.png`,
+        secureUrl: `${appUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'CraftCV - Free ATS Resume Builder & Online CV Maker',
+        alt: 'CraftCV — Free ATS Resume Builder & Online CV Maker by Bot&Guy',
+        type: 'image/png',
       },
     ],
   },
@@ -84,9 +87,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CraftCV | Free ATS Resume Builder & CV Maker',
     description:
-      '100% Free ATS Resume Builder & Online CV Creator by Bot&Guy.',
-    images: ['/twitter-image.png'],
+      '100% Free ATS Resume Builder & Online CV Creator by Bot&Guy. Build job-winning resumes with 20+ templates, live preview & instant PDF export.',
+    images: [`${appUrl}/twitter-image.png`],
     creator: '@botandguy',
+    site: '@botandguy',
   },
   robots: {
     index: true,
@@ -122,6 +126,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#0C0C0C" />
+        {/* Additional OG meta for compatibility with platforms not using Next.js og: */}
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
         <StructuredData />
       </head>
       <body className="min-h-screen bg-[#F9F9F9] text-[#0C0C0C] antialiased flex flex-col">
@@ -131,4 +139,3 @@ export default function RootLayout({
     </html>
   );
 }
-

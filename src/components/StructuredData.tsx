@@ -1,7 +1,7 @@
 import Script from 'next/script';
 
 export function StructuredData() {
-  const websiteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://craftcv.botandguy.com';
+  const websiteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy.com';
 
   const webAppSchema = {
     '@context': 'https://schema.org',

@@ -50,10 +50,10 @@ export function Footer() {
               <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#febc04] transition-colors">Bot&amp;Guy</a>
             </h4>
             <ul className="space-y-2.5 text-xs font-medium">
-              <li><a href="https://botandguy.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">About Bot&amp;Guy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact Support</a></li>
+              <li><a href="https://botandguy.com/about" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">About Bot&amp;Guy</a></li>
+              <li><a href="https://botandguy.com/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="https://botandguy.com/terms" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="https://botandguy.com/contact" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Contact Support</a></li>
             </ul>
           </div>
         </div>
