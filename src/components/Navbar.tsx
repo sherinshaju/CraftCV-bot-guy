@@ -28,7 +28,7 @@ export function Navbar() {
               Craft<span className="text-[#febc04]">CV</span>
             </span>
             <span className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase">
-              by Bot&amp;Guy
+              by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#febc04] underline transition-colors">Bot&amp;Guy</a>
             </span>
           </div>
         </Link>
@@ -62,7 +62,10 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => signOut()}
+                onClick={async () => {
+                  await signOut();
+                  window.location.href = '/';
+                }}
                 title="Sign Out"
                 className="text-slate-500 hover:text-red-600"
               >

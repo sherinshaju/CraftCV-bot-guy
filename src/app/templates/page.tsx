@@ -508,7 +508,7 @@ export default function TemplatesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold text-amber-800 shadow-sm">
             <Sparkles className="h-4 w-4 text-[#febc04]" />
-            <span>Premium ATS-Friendly Templates by Bot&amp;Guy</span>
+            <span>Premium ATS-Friendly Templates by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#febc04] transition-colors">Bot&amp;Guy</a></span>
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight text-[#0c0c0c] sm:text-5xl max-w-3xl mx-auto">

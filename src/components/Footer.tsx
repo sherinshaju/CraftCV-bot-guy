@@ -46,7 +46,9 @@ export function Footer() {
 
           {/* Legal & Company */}
           <div>
-            <h4 className="font-semibold text-white text-sm mb-4">Bot&amp;Guy</h4>
+            <h4 className="font-semibold text-white text-sm mb-4">
+              <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#febc04] transition-colors">Bot&amp;Guy</a>
+            </h4>
             <ul className="space-y-2.5 text-xs font-medium">
               <li><a href="https://botandguy.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">About Bot&amp;Guy</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
@@ -57,9 +59,9 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} CraftCV by Bot&amp;Guy. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CraftCV by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">Bot&amp;Guy</a>. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            Crafted with <Heart className="h-3.5 w-3.5 text-[#febc04] fill-[#febc04]" /> by Bot&amp;Guy Team
+            Crafted with <Heart className="h-3.5 w-3.5 text-[#febc04] fill-[#febc04]" /> by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">Bot&amp;Guy Team</a>
           </p>
         </div>
       </div>

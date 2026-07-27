@@ -322,7 +322,7 @@ export default function LandingPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-amber-50 px-4 py-1.5 text-xs font-bold text-amber-800 shadow-sm">
                 <Sparkles className="h-4 w-4 text-[#febc04]" />
                 <span>
-                  The #1 Free ATS Resume Builder &amp; Online CV Maker by Bot&amp;Guy
+                  The #1 Free ATS Resume Builder &amp; Online CV Maker by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#febc04] transition-colors">Bot&amp;Guy</a>
                 </span>
               </div>
 
@@ -679,7 +679,7 @@ export default function LandingPage() {
             Ready to Land Your Next Dream Job?
           </h2>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">
-            Build your professional resume now with CraftCV by Bot&amp;Guy and
+            Build your professional resume now with CraftCV by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="underline text-white hover:text-[#febc04] transition-colors">Bot&amp;Guy</a> and
             showcase your qualifications to recruiters.
           </p>
           <Link href={user ? "/dashboard" : "/auth/login?redirect=%2Fdashboard"}>
