@@ -2522,7 +2522,7 @@ export default function ResumeBuilder({
   if (!resume) return null;
 
   return (
-    <div className="space-y-6 mx-auto h-[calc(100vh-8rem)] flex flex-col px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <div className="space-y-6 mx-auto h-[calc(100dvh-5rem)] flex flex-col px-4 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
       {/* Top Controls Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-black/5 p-4 rounded-xl shadow-sm flex-shrink-0">
         <div className="flex items-center gap-3 w-full sm:w-auto">
