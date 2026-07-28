@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
@@ -23,10 +24,23 @@ import {
   Layout,
   Layers,
   HelpCircle,
+  X,
 } from "lucide-react";
 
 export default function LandingPageClient() {
   const { user } = useAuthStore();
+  const [showVideoModal, setShowVideoModal] = useState(false);
+
+  useEffect(() => {
+    if (showVideoModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showVideoModal]);
   const templates = [
     {
       id: "minimal",
@@ -579,6 +593,99 @@ export default function LandingPageClient() {
               </Button>
             </Link>
           </div>
+          </div>
+      </section>
+
+      {/* How to Build Guide Section */}
+      <section id="walkthrough" className="py-20 bg-slate-900 text-white border-t border-slate-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Guidelines */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="space-y-3">
+                <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#febc04]">
+                  Simple 3-Step Guide
+                </h2>
+                <h3 className="text-3xl font-extrabold sm:text-4xl text-white">
+                  How to Build Your Resume
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Creating a recruiter-ready resume takes less than 5 minutes. Watch the live walkthrough to see how easy it is to input details and download a PDF.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {/* Step 1 */}
+                <div className="flex gap-4 items-start">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#febc04] text-[#0c0c0c] font-bold text-sm">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white text-base">Fill Out Details</h4>
+                    <p className="text-slate-400 text-xs mt-1 leading-relaxed">
+                      Enter your contact info, experience, education, skills, and projects. Sections can be dragged to reorder.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="flex gap-4 items-start">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#febc04] text-[#0c0c0c] font-bold text-sm">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white text-base">Live Preview Sync</h4>
+                    <p className="text-slate-400 text-xs mt-1 leading-relaxed">
+                      Our live parser formats everything dynamically. View changes instantly on the visual canvas.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="flex gap-4 items-start">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#febc04] text-[#0c0c0c] font-bold text-sm">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white text-base">Download Vector PDF</h4>
+                    <p className="text-slate-400 text-xs mt-1 leading-relaxed">
+                      Click the Download PDF button in the editor. Your browser downloads a crisp PDF ready for applications.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Video Walkthrough */}
+            <div className="lg:col-span-7 relative">
+              <div 
+                onClick={() => setShowVideoModal(true)}
+                className="relative mx-auto rounded-2xl border border-slate-800 bg-[#0c0c0c] p-2.5 shadow-2xl overflow-hidden group cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
+              >
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-2 px-1">
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-500">walkthrough.mp4 (Click to Zoom)</span>
+                </div>
+                <div className="w-full rounded-lg overflow-hidden bg-slate-950 border border-slate-800 relative">
+                  <img
+                    src="/walkthrough.webp"
+                    alt="Complete Resume Build & PDF Download Manual Video"
+                    className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.01]"
+                  />
+                  {/* Play/View Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 flex items-center justify-center transition-colors">
+                    <div className="rounded-full bg-[#febc04] text-[#0c0c0c] p-4 shadow-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 group-hover:scale-100 flex items-center justify-center">
+                      <Eye className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -694,6 +801,47 @@ export default function LandingPageClient() {
           </Link>
         </div>
       </section>
+
+      {/* Video Modal Overlay */}
+      {showVideoModal && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 animate-fade-in"
+          onClick={() => setShowVideoModal(false)}
+        >
+          {/* Outside Close Button */}
+          <button 
+            onClick={() => setShowVideoModal(false)}
+            className="absolute top-4 right-4 z-[110] rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white p-3 transition-all border border-white/10 shadow-lg hover:scale-110"
+            aria-label="Close modal"
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          {/* Modal Container */}
+          <div 
+            className="relative w-full max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] rounded-2xl border border-slate-800 bg-[#0c0c0c] p-3 shadow-2xl overflow-hidden animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header controls */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3 px-1">
+              <div className="flex items-center gap-1.5">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                <div className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+                <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+              </div>
+              <span className="text-xs font-mono text-slate-400">walkthrough.mp4</span>
+            </div>
+            {/* Video container */}
+            <div className="w-full rounded-lg overflow-hidden bg-transparent flex items-center justify-center">
+              <img
+                src="/walkthrough.webp"
+                alt="Complete Resume Build & PDF Download Manual Video"
+                className="w-full h-auto max-h-[80vh] object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
