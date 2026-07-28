@@ -5,9 +5,9 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: 'Resume Templates | 20+ Free ATS-Friendly CV Templates — CraftCV',
+  title: 'Resume Templates | 20+ Free ATS-Friendly CV Templates — Resume Maker',
   description:
-    'Browse 20+ free professional ATS-friendly resume templates by CraftCV. Choose from Minimal, Modern, Executive, Tech, Creative, Academic and more — built to pass ATS screening and impress recruiters.',
+    'Browse 20+ free professional ATS-friendly resume templates by Resume Maker. Choose from Minimal, Modern, Executive, Tech, Creative, Academic and more — built to pass ATS screening and impress recruiters.',
   keywords: [
     'Free Resume Templates',
     'ATS Resume Templates',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     'Tech Resume Templates',
     'Executive Resume Templates',
     'Creative Resume Templates',
-    'CraftCV Templates',
+    'Resume Maker Templates',
   ],
   alternates: {
     canonical: `${appUrl}/templates`,
@@ -27,16 +27,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: `${appUrl}/templates`,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'Resume Templates | 20+ Free ATS-Friendly CV Designs — CraftCV',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'Resume Templates | 20+ Free ATS-Friendly CV Designs — Resume Maker',
     description:
-      '20+ professionally designed, ATS-optimized resume templates. Pick your style, personalize, and export to PDF for free with CraftCV.',
+      '20+ professionally designed, ATS-optimized resume templates. Pick your style, personalize, and export to PDF for free with Resume Maker.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CraftCV Resume Templates — 20+ Free ATS-Friendly Designs',
+        alt: 'Resume Maker Resume Templates — 20+ Free ATS-Friendly Designs',
         type: 'image/png',
       },
     ],
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@botandguy',
     creator: '@botandguy',
-    title: 'Resume Templates | 20+ Free ATS-Friendly Designs — CraftCV',
+    title: 'Resume Templates | 20+ Free ATS-Friendly Designs — Resume Maker',
     description:
       '20+ free ATS-optimized resume templates to choose from. Personalize & export to PDF instantly.',
     images: ['/twitter-image.png'],

@@ -1,8 +1,8 @@
-# CraftCV by Bot&Guy
+# Resume Maker by Bot&Guy
 
-**CraftCV** is an AI-powered, ATS-optimized, multi-template Resume Builder product developed by Bot&Guy. Built with Next.js 16/15, React 19, Tailwind CSS, Supabase, Framer Motion, and PDF export tools.
+**Resume Maker** is an AI-powered, ATS-optimized, multi-template Resume Builder product developed by Bot&Guy. Built with Next.js 16/15, React 19, Tailwind CSS, Supabase, Framer Motion, and PDF export tools.
 
-![CraftCV Banner](public/logo.png)
+![Resume Maker Banner](public/logo.png)
 
 ---
 
@@ -67,7 +67,7 @@ Open [http://localhost:3000](http://localhost:3000) (or `http://localhost:3001`)
 ## Project Structure
 
 ```
-craftcv-bot-guy/
+resumemaker-bot-guy/
 ├── public/                        # Logo & static assets
 ├── supabase/
 │   └── migrations/
@@ -78,7 +78,7 @@ craftcv-bot-guy/
 │   │   ├── dashboard/            # Resume management grid & builder ([id])
 │   │   ├── globals.css           # Custom theme tokens & glassmorphism
 │   │   ├── layout.tsx            # Root layout with Auth initializer
-│   │   └── page.tsx              # CraftCV Product Landing Page
+│   │   └── page.tsx              # Resume Maker Product Landing Page
 │   ├── components/               # Navbar, Footer, UI components
 │   ├── lib/                      # Supabase clients & utility helpers
 │   ├── store/                    # Zustand auth store

@@ -68,10 +68,10 @@ export default function RegisterClient() {
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-[#0c0c0c] p-1.5 flex items-center justify-center">
-              <Image src="/logo.png" alt="CraftCV Logo" width={32} height={32} className="object-contain" />
+              <Image src="/logo.png" alt="Resume Maker Logo" width={32} height={32} className="object-contain" />
             </div>
             <span className="font-extrabold text-2xl text-[#0c0c0c] tracking-tight">
-              Craft<span className="text-[#febc04]">CV</span>
+              Resume<span className="text-[#febc04]">Maker</span>
             </span>
           </Link>
           <h2 className="text-2xl font-extrabold text-[#0c0c0c] pt-2">Create Free Account</h2>

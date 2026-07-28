@@ -108,14 +108,14 @@ export default function LandingPageClient() {
   const faqs = [
     {
       q: "What is the best resume format to land interviews globally?",
-      a: "Top employers and recruiters globally rely on Applicant Tracking Systems (like Workday, Taleo, Greenhouse, Lever, and LinkedIn). The best format is a clean, structured 1 to 2 page resume with standard font hierarchies, quantified achievements, and clear section headings. CraftCV templates are pre-built to pass all major ATS filters seamlessly.",
+      a: "Top employers and recruiters globally rely on Applicant Tracking Systems (like Workday, Taleo, Greenhouse, Lever, and LinkedIn). The best format is a clean, structured 1 to 2 page resume with standard font hierarchies, quantified achievements, and clear section headings. Resume Maker templates are pre-built to pass all major ATS filters seamlessly.",
     },
     {
       q: "Will my resume pass Applicant Tracking Systems (ATS) worldwide?",
-      a: "Absolutely. CraftCV templates use standardized font families, parseable semantic headers, and standard layout structures that pass global ATS screening with 100% precision.",
+      a: "Absolutely. Resume Maker templates use standardized font families, parseable semantic headers, and standard layout structures that pass global ATS screening with 100% precision.",
     },
     {
-      q: "Is CraftCV completely free to use?",
+      q: "Is Resume Maker completely free to use?",
       a: "Yes! You can build, customize, and export high-resolution PDF resumes with our core templates completely free.",
     },
     {
@@ -391,7 +391,7 @@ export default function LandingPageClient() {
                     <div className="h-3 w-3 rounded-full bg-emerald-400" />
                   </div>
                   <span className="text-[11px] font-mono font-semibold text-slate-400">
-                    CraftCV Live Builder
+                    Resume Maker Live Builder
                   </span>
                 </div>
 
@@ -679,7 +679,7 @@ export default function LandingPageClient() {
             Ready to Land Your Next Dream Job?
           </h2>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">
-            Build your professional resume now with CraftCV by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="underline text-white hover:text-[#febc04] transition-colors">Bot&amp;Guy</a> and
+            Build your professional resume now with Resume Maker by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="underline text-white hover:text-[#febc04] transition-colors">Bot&amp;Guy</a> and
             showcase your qualifications to recruiters.
           </p>
           <Link href={user ? "/dashboard" : "/auth/login?redirect=%2Fdashboard"}>

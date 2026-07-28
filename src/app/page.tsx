@@ -5,7 +5,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: 'CraftCV | Free ATS Resume Builder, Online CV Maker & Resume Creator',
+  title: 'Resume Maker | Free ATS Resume Builder, Online CV Maker & Resume Creator',
   description:
     '100% Free ATS Resume Builder & Online CV Maker by Bot&Guy. Create job-winning, ATS-friendly professional resumes with 20+ templates, real-time multi-page preview, and instant pixel-perfect PDF export. Build your resume for free today.',
   keywords: [
@@ -19,10 +19,8 @@ export const metadata: Metadata = {
     'Job Winning Resume',
     'ATS Friendly Resume',
     'Best Free Resume Builder 2024',
-    'Dubai Resume Builder',
-    'UAE CV Format',
     'Remote Job Resume',
-    'CraftCV',
+    'Resume Maker',
     'Bot&Guy',
   ],
   alternates: {
@@ -32,8 +30,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: appUrl,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'CraftCV | Free ATS Resume Builder & Online CV Maker',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'Resume Maker | Free ATS Resume Builder & Online CV Maker',
     description:
       'Build job-winning ATS-friendly resumes for free. 20+ professional templates, live preview, AI optimization, and instant PDF export — by Bot&Guy.',
     images: [
@@ -41,7 +39,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CraftCV — Free ATS Resume Builder & Online CV Maker by Bot&Guy',
+        alt: 'Resume Maker — Free ATS Resume Builder & Online CV Maker by Bot&Guy',
         type: 'image/png',
       },
     ],
@@ -50,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@botandguy',
     creator: '@botandguy',
-    title: 'CraftCV | Free ATS Resume Builder & CV Maker',
+    title: 'Resume Maker | Free ATS Resume Builder & CV Maker',
     description:
       'Build ATS-friendly, job-winning resumes for free. 20+ templates, AI optimization & instant PDF — by Bot&Guy.',
     images: ['/twitter-image.png'],

@@ -6,14 +6,13 @@ export function StructuredData() {
   const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    'name': 'CraftCV - Free ATS Resume Builder, CV Maker & Resume Creator',
+    'name': 'Resume Maker - Free ATS Resume Builder, CV Maker & Resume Creator',
     'alternateName': [
-      'CraftCV',
+      'Resume Maker',
       'Free Resume Builder',
       'CV Builder',
-      'Resume Maker',
       'Free CV Creator',
-      'CraftCV Bot&Guy',
+      'Resume Maker Bot&Guy',
       'ATS Resume Generator',
     ],
     'url': websiteUrl,
@@ -53,7 +52,7 @@ export function StructuredData() {
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    'name': 'CraftCV by Bot&Guy',
+    'name': 'Resume Maker by Bot&Guy',
     'url': websiteUrl,
     'logo': `${websiteUrl}/logo.png`,
     'sameAs': ['https://botandguy.com'],
@@ -68,7 +67,7 @@ export function StructuredData() {
         'name': 'What is the best resume format to land interviews globally?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Top employers and recruiters globally rely on Applicant Tracking Systems (like Workday, Taleo, Greenhouse, Lever, and LinkedIn). The best format is a clean, structured 1 to 2 page resume with standard font hierarchies, quantified achievements, and clear section headings. CraftCV templates are pre-built to pass all major ATS filters seamlessly.',
+          'text': 'Top employers and recruiters globally rely on Applicant Tracking Systems (like Workday, Taleo, Greenhouse, Lever, and LinkedIn). The best format is a clean, structured 1 to 2 page resume with standard font hierarchies, quantified achievements, and clear section headings. Resume Maker templates are pre-built to pass all major ATS filters seamlessly.',
         },
       },
       {
@@ -76,7 +75,7 @@ export function StructuredData() {
         'name': 'Will my resume pass Applicant Tracking Systems (ATS) worldwide?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Yes! CraftCV uses clean semantic markup and standardized layouts verified against popular ATS software used globally, including Workday, Taleo, SuccessFactors, Greenhouse, Lever, and LinkedIn recruiter portals.',
+          'text': 'Yes! Resume Maker uses clean semantic markup and standardized layouts verified against popular ATS software used globally, including Workday, Taleo, SuccessFactors, Greenhouse, Lever, and LinkedIn recruiter portals.',
         },
       },
       {
@@ -84,7 +83,7 @@ export function StructuredData() {
         'name': 'Can I export high-quality PDF resumes for free?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Absolutely. CraftCV allows job seekers worldwide to design, preview, and download vector-based pixel-perfect PDFs ready for direct online submission or email applications.',
+          'text': 'Absolutely. Resume Maker allows job seekers worldwide to design, preview, and download vector-based pixel-perfect PDFs ready for direct online submission or email applications.',
         },
       },
     ],

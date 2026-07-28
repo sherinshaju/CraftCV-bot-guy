@@ -11,10 +11,10 @@ export function Footer() {
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-xl bg-white/10 p-1.5 flex items-center justify-center">
-                <Image src="/logo.png" alt="CraftCV Logo" width={32} height={32} className="object-contain" />
+                <Image src="/logo.png" alt="Resume Maker Logo" width={32} height={32} className="object-contain" />
               </div>
               <span className="font-extrabold text-xl text-white tracking-tight">
-                Craft<span className="text-[#febc04]">CV</span>
+                Resume<span className="text-[#febc04]">Maker</span>
               </span>
             </Link>
             <p className="text-xs leading-relaxed text-slate-400">
@@ -59,7 +59,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} CraftCV by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">Bot&amp;Guy</a>. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Resume Maker by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">Bot&amp;Guy</a>. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Crafted with <Heart className="h-3.5 w-3.5 text-[#febc04] fill-[#febc04]" /> by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">Bot&amp;Guy Team</a>
           </p>

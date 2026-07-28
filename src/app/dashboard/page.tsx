@@ -5,9 +5,9 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: 'Dashboard | Manage Your Resumes — CraftCV',
+  title: 'Dashboard | Manage Your Resumes — Resume Maker',
   description:
-    'Your CraftCV resume dashboard. Create new resumes, use the AI builder, check ATS scores, edit saved CVs, and download PDF exports — all in one place.',
+    'Your Resume Maker resume dashboard. Create new resumes, use the AI builder, check ATS scores, edit saved CVs, and download PDF exports — all in one place.',
   alternates: {
     canonical: `${appUrl}/dashboard`,
   },
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: `${appUrl}/dashboard`,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'Dashboard | Manage Your Resumes — CraftCV',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'Dashboard | Manage Your Resumes — Resume Maker',
     description:
       'Your personal resume dashboard. Build, edit, duplicate and export professional ATS-ready resumes.',
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CraftCV Dashboard — Build and Manage Your Resumes',
+        alt: 'Resume Maker Dashboard — Build and Manage Your Resumes',
         type: 'image/png',
       },
     ],
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@botandguy',
     creator: '@botandguy',
-    title: 'Dashboard | Manage Your Resumes — CraftCV',
+    title: 'Dashboard | Manage Your Resumes — Resume Maker',
     description:
-      'Create, edit, and download your professional ATS-ready resumes from your CraftCV dashboard.',
+      'Create, edit, and download your professional ATS-ready resumes from your Resume Maker dashboard.',
     images: ['/twitter-image.png'],
   },
   robots: {

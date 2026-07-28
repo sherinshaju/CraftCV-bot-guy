@@ -5,9 +5,9 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: 'Login | Sign In to CraftCV — Free ATS Resume Builder',
+  title: 'Login | Sign In to Resume Maker — Free ATS Resume Builder',
   description:
-    'Sign in to your CraftCV account to access your saved resumes, AI builder, ATS checker, and PDF export tools. Build job-winning resumes for free.',
+    'Sign in to your Resume Maker account to access your saved resumes, AI builder, ATS checker, and PDF export tools. Build job-winning resumes for free.',
   alternates: {
     canonical: `${appUrl}/auth/login`,
   },
@@ -15,16 +15,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: `${appUrl}/auth/login`,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'Login | Sign In to CraftCV',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'Login | Sign In to Resume Maker',
     description:
-      'Sign in to access your CraftCV dashboard and manage your professional resumes.',
+      'Sign in to access your Resume Maker dashboard and manage your professional resumes.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CraftCV Login — Access Your Resume Builder',
+        alt: 'Resume Maker Login — Access Your Resume Builder',
         type: 'image/png',
       },
     ],
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@botandguy',
-    title: 'Login | CraftCV — Free ATS Resume Builder',
-    description: 'Sign in to CraftCV and start building your professional resume.',
+    title: 'Login | Resume Maker — Free ATS Resume Builder',
+    description: 'Sign in to Resume Maker and start building your professional resume.',
     images: ['/twitter-image.png'],
   },
   robots: {

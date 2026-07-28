@@ -1,7 +1,7 @@
 {
-  "name": "CraftCV Dubai | #1 ATS Resume Builder & CV Maker",
-  "short_name": "CraftCV Dubai",
-  "description": "Create ATS-friendly, job-winning resumes & CVs tailored for Dubai, Abu Dhabi, UAE & Gulf job markets with instant PDF export.",
+  "name": "Resume Maker | #1 ATS Resume Builder & CV Maker",
+  "short_name": "Resume Maker",
+  "description": "Create ATS-friendly, job-winning professional resumes & CVs with instant PDF export.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -19,5 +19,5 @@
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "/",
-  "lang": "en-AE"
+  "lang": "en-US"
 }

@@ -14,8 +14,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: 'CraftCV | Free ATS Resume Builder, Online CV Maker & Resume Creator',
-    template: '%s | CraftCV',
+    default: 'Resume Maker | Free ATS Resume Builder, Online CV Maker & Resume Creator',
+    template: '%s | Resume Maker',
   },
   description:
     '100% Free ATS Resume Builder & Online CV Maker by Bot&Guy. Create job-winning, professional ATS-friendly resumes with 20+ templates, real-time multi-page preview, and instant pixel-perfect PDF export.',
@@ -32,15 +32,13 @@ export const metadata: Metadata = {
     'Best Free CV Maker',
     'Job Winning Resume Templates',
     'PDF Resume Maker',
-    'Dubai Resume Builder',
-    'UAE CV Format',
-    'CraftCV',
+    'Resume Maker Bot&Guy',
     'Bot&Guy',
   ],
   authors: [{ name: 'Bot&Guy', url: 'https://botandguy.com' }],
   creator: 'Bot&Guy',
   publisher: 'Bot&Guy',
-  applicationName: 'CraftCV',
+  applicationName: 'Resume Maker',
   manifest: '/site.webmanifest',
   icons: {
     icon: [
@@ -66,10 +64,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    alternateLocale: ['en_AE', 'ar_AE'],
     url: appUrl,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'CraftCV | Free ATS Resume Builder, CV Maker & Resume Creator',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'Resume Maker | Free ATS Resume Builder, CV Maker & Resume Creator',
     description:
       '100% Free ATS Resume Builder & Online CV Creator. Build job-winning, recruiter-approved resumes with 20+ templates, live preview & instant vector PDF export.',
     images: [
@@ -78,14 +75,14 @@ export const metadata: Metadata = {
         secureUrl: `${appUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'CraftCV — Free ATS Resume Builder & Online CV Maker by Bot&Guy',
+        alt: 'Resume Maker — Free ATS Resume Builder & Online CV Maker by Bot&Guy',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CraftCV | Free ATS Resume Builder & CV Maker',
+    title: 'Resume Maker | Free ATS Resume Builder & CV Maker',
     description:
       '100% Free ATS Resume Builder & Online CV Creator by Bot&Guy. Build job-winning resumes with 20+ templates, live preview & instant PDF export.',
     images: [`${appUrl}/twitter-image.png`],
@@ -106,8 +103,6 @@ export const metadata: Metadata = {
     canonical: appUrl,
     languages: {
       'en-US': appUrl,
-      'en-AE': appUrl,
-      'ar-AE': appUrl,
     },
   },
 };

@@ -1,4 +1,4 @@
--- CraftCV by Bot&Guy Standalone Database Migration Script
+-- Resume Maker by Bot&Guy Standalone Database Migration Script
 
 -- 1. Enable UUID Extension
 create extension if not exists "uuid-ossp";

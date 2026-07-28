@@ -5,9 +5,9 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://resumemaker.botandguy
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
-  title: 'ATS Score Checker | Scan & Optimize Your Resume — CraftCV',
+  title: 'ATS Score Checker | Scan & Optimize Your Resume — Resume Maker',
   description:
-    'Free ATS resume score checker by CraftCV. Paste your resume and job description to get an instant ATS match score, keyword analysis, missing skills, and AI-powered optimization suggestions.',
+    'Free ATS resume score checker by Resume Maker. Paste your resume and job description to get an instant ATS match score, keyword analysis, missing skills, and AI-powered optimization suggestions.',
   keywords: [
     'ATS Score Checker',
     'Resume ATS Scanner',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'Free ATS Tool',
     'Resume Job Match Score',
     'ATS Compatibility Check',
-    'CraftCV ATS',
+    'Resume Maker ATS',
   ],
   alternates: {
     canonical: `${appUrl}/dashboard/ats-score`,
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: `${appUrl}/dashboard/ats-score`,
-    siteName: 'CraftCV by Bot&Guy',
-    title: 'ATS Score Checker | Scan & Optimize Your Resume — CraftCV',
+    siteName: 'Resume Maker by Bot&Guy',
+    title: 'ATS Score Checker | Scan & Optimize Your Resume — Resume Maker',
     description:
       'Get an instant ATS compatibility score for your resume vs any job description. Find missing keywords and optimize your CV with AI.',
     images: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CraftCV ATS Score Checker — Optimize Your Resume',
+        alt: 'Resume Maker ATS Score Checker — Optimize Your Resume',
         type: 'image/png',
       },
     ],
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@botandguy',
     creator: '@botandguy',
-    title: 'Free ATS Score Checker — CraftCV',
+    title: 'Free ATS Score Checker — Resume Maker',
     description:
       'Instantly check how well your resume matches a job description. Get keyword insights & AI optimization.',
     images: ['/twitter-image.png'],

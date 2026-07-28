@@ -29,7 +29,7 @@ export default function DashboardLayout({
       <div className="flex min-h-screen items-center justify-center bg-[#F9F9F9]">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="h-8 w-8 animate-spin text-[#0c0c0c]" />
-          <p className="text-xs font-bold text-slate-500">Loading CraftCV Dashboard...</p>
+          <p className="text-xs font-bold text-slate-500">Loading Resume Maker Dashboard...</p>
         </div>
       </div>
     );

@@ -17,7 +17,7 @@ export function Navbar() {
           <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-[#0c0c0c] p-1.5 shadow-md transition-transform group-hover:scale-105">
             <Image
               src="/logo.png"
-              alt="CraftCV Logo"
+              alt="Resume Maker Logo"
               width={40}
               height={40}
               className="h-full w-full object-contain"
@@ -25,7 +25,7 @@ export function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg text-[#0c0c0c] tracking-tight leading-none">
-              Craft<span className="text-[#febc04]">CV</span>
+              Resume<span className="text-[#febc04]">Maker</span>
             </span>
             <span className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase">
               by <a href="https://botandguy.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#febc04] underline transition-colors">Bot&amp;Guy</a>
