@@ -644,10 +644,13 @@ export default function ResumeBuilder({
 
   const [resume, setResume] = useState<Resume | null>(null);
   const [skillInput, setSkillInput] = useState("");
+  const hasFetched = useRef(false);
 
   // Fetch resume data
   useEffect(() => {
-    if (!user || !id) return;
+    if (!user || !id || hasFetched.current) return;
+    hasFetched.current = true;
+    
     const fetchResume = async () => {
       try {
         const { data, error } = await supabase

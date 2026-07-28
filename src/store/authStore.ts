@@ -25,9 +25,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return;
     }
     
-    set({ session, user: session.user, loading: true });
+    const isAlreadyAuthenticated = get().user !== null && get().profile !== null;
+    
+    set({ 
+      session, 
+      user: session.user, 
+      loading: isAlreadyAuthenticated ? false : true 
+    });
     
     try {
+      if (isAlreadyAuthenticated) {
+        return;
+      }
+      
       const { data: profile } = await supabase
         .from('profiles')
         .select('*')
